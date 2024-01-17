@@ -108,8 +108,8 @@
             </nav><!-- .nav-menu -->
         </div>
     </header><!-- End Header -->
-
-    <section>
+    <main id="main">
+    <section >
         <div class="container">
             @RenderBody()
             @* <main role="main" class="pb-3">
@@ -117,8 +117,10 @@
             </main> *@
         </div>
     </section>
-    
-
+    </main>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
     @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - prjMvcCoreDemo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
