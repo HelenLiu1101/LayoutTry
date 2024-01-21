@@ -32,6 +32,11 @@ h5,
 h6 {
   font-family: "Raleway", sans-serif;
 }
+.navbar {
+    padding-left: 250px;
+    background: #040b14;
+    height: 85px;
+}
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -128,7 +133,8 @@ h6 {
 }
 
 #main {
-  margin-left: 250px;
+    margin-left: 250px;
+    overflow-x: auto;
 }
 
 .container,
@@ -310,7 +316,7 @@ h6 {
 --------------------------------------------------------------*/
 section {
   padding: 60px 0;
-  overflow: hidden;
+ /* overflow: hidden;*/
 }
 
 .section-bg {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LayoutTry.Models;
+using LayoutTry.DTO;
 
 namespace LayoutTry.Controllers
 {
@@ -18,11 +19,32 @@ namespace LayoutTry.Controllers
             _context = context;
         }
 
+        //// GET: TicketRequests 
+
+        //public async Task<IActionResult> GetTicketRequests()
+        //{
+        //    //return _context.TicketRequests.Select(e => new TicketRequestsDTO {
+        //    //    EmployeeId = e.EmployeeId,
+        //    //    FirstName = e.FirstName,
+        //    //    LastName = e.LastName,
+        //    //    Title = e.Title
+        //    //});
+        //    return View();
+        //}
+
+
+
+        [HttpGet]
         // GET: TicketRequests
         public async Task<IActionResult> Index()
         {
-            var ispanFinContext = _context.TicketRequests.Include(t => t.Event).Include(t => t.Member).Include(t => t.Section).Include(t => t.Show).Include(t => t.Ticket);
-            return View(await ispanFinContext.ToListAsync());
+            //var ispanFinContext = _context.TicketRequests.Include(t => t.Event).Include(t => t.Member).Include(t => t.Section).Include(t => t.Show).Include(t => t.Ticket);
+            //_context.TicketRequests.Select(tr => new TicketRequestDTO
+            var datas = from tr in _context.TicketRequests select tr;
+
+            return View(datas);
+
+            //return View(await ispanFinContext.ToListAsync());
         }
 
         // GET: TicketRequests/Details/5
@@ -51,6 +73,8 @@ namespace LayoutTry.Controllers
         // GET: TicketRequests/Create
         public IActionResult Create()
         {
+
+
             ViewData["EventId"] = new SelectList(_context.Events, "EventId", "EventId");
             ViewData["MemberId"] = new SelectList(_context.Members, "MemberId", "MemberId");
             ViewData["SectionId"] = new SelectList(_context.Sections, "SectionId", "SectionId");
@@ -185,3 +209,4 @@ namespace LayoutTry.Controllers
         }
     }
 }
+

@@ -29,7 +29,7 @@
 
 </head>
 <body>
-    <header>
+    <header id="navTop">
         <nav class="navbar nav-menu navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container-fluid">
             </div>
@@ -44,7 +44,7 @@
             <div class="profile">
                 @* <img src="assets/img/profile-img.jpg" alt="" class="img-fluid rounded-circle"> *@
                 <h1 class="mt-5 text-light"><a href="#">後台頁面</a></h1>
-                
+
             </div>
 
             <nav id="navbar" class="nav-menu navbar">
@@ -56,12 +56,11 @@
                         </a>
                     </li>
                     <li>
-                         @* <a class="nav-link scrollto" asp-area="" asp-controller="Member" asp-action="List">
-    <i class="bx bx-user"></i>
-    <span>會員管理</span> *@
+
                         <a href="#about" class="nav-link scrollto">
-                            <i class="bx bx-user"></i> 
-                            <span>會員管理</span></a>
+                            <i class="bx bx-user"></i>
+                            <span>會員管理</span>
+                        </a>
                     </li>
                     <li>
                         <a href="#resume" class="nav-link scrollto">
@@ -83,7 +82,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#contact" class="nav-link scrollto">
+                        <a class="nav-link scrollto" asp-area="" asp-controller="TicketRequests" asp-action="Index">
+
+                            @*  <a href="#contact" class="nav-link scrollto"> *@
                             <i class='bx bxs-hand'></i>
                             <span>二手票券交易平台管理</span>
                         </a>
@@ -93,22 +94,22 @@
         </div>
     </header><!-- End Header -->
     <main id="main">
-    <section >
-        <div class="container">
-            @RenderBody()
-            @* <main role="main" class="pb-3">
-               
-            </main> *@
-        </div>
-    </section>
+        <section>
+            <div class="container">
+                @RenderBody()
+                @* <main role="main" class="pb-3">
+
+                </main> *@
+            </div>
+        </section>
     </main>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
         <i class="bi bi-arrow-up-short"></i>
     </a>
     @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - prjMvcCoreDemo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <div class="container">
+    &copy; 2024 - prjMvcCoreDemo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
     </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
