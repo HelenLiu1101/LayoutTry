@@ -1,0 +1,125 @@
+﻿@model IEnumerable<LayoutTry.Models.TicketRequest>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketCategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatRangeS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatRangeE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Section)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Show)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketCategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityRequest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatRangeS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatRangeE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.EventId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Section.SectionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Show.ShowId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ticket.TicketId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TicketRequestId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TicketRequestId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TicketRequestId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
