@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LayoutTry.Models;
 using LayoutTry.DTO;
+using LayoutTry.ViewModel;
 
 namespace LayoutTry.Controllers
 {
@@ -36,13 +37,28 @@ namespace LayoutTry.Controllers
 
         [HttpGet]
         // GET: TicketRequests
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> List(TRListViewModel vm)
         {
+            List<TRListViewModel> list = new List<TRListViewModel>();
             //var ispanFinContext = _context.TicketRequests.Include(t => t.Event).Include(t => t.Member).Include(t => t.Section).Include(t => t.Show).Include(t => t.Ticket);
             //_context.TicketRequests.Select(tr => new TicketRequestDTO
-            var datas = from tr in _context.TicketRequests select tr;
-
-            return View(datas);
+            //var datas = from tr in _context.TicketRequests select tr;
+            var datas = await _context.TicketRequests
+                .Include(t => t.Event)
+                .Include(t => t.Member)
+                .Include(t => t.Section)
+                .Include(t => t.Show)
+                .Include(t => t.Ticket).ToListAsync();
+            
+            foreach(TicketRequest tr in datas)
+            {
+                vm.TicketRequestId = tr.TicketRequestId;
+                vm.eventName = tr.Event.EventName;
+                vm.TRStatus = tr.RequestStatus;
+                vm.ReleaseDate = tr.ReleaseDate;
+                list.Add(vm);
+            }
+            return View(list);
 
             //return View(await ispanFinContext.ToListAsync());
         }
@@ -60,8 +76,9 @@ namespace LayoutTry.Controllers
                 .Include(t => t.Member)
                 .Include(t => t.Section)
                 .Include(t => t.Show)
-                .Include(t => t.Ticket)
-                .FirstOrDefaultAsync(m => m.TicketRequestId == id);
+                .Include(t => t.Ticket).ToListAsync();
+           string str= ticketRequest[0].Event.EventName; 
+
             if (ticketRequest == null)
             {
                 return NotFound();
