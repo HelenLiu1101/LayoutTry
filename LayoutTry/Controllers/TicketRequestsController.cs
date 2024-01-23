@@ -37,7 +37,7 @@ namespace LayoutTry.Controllers
 
         [HttpGet]
         // GET: TicketRequests
-        public async Task<IActionResult> List(TRListViewModel vm)
+        public async Task<IActionResult> List()
         {
             List<TRListViewModel> list = new List<TRListViewModel>();
             //var ispanFinContext = _context.TicketRequests.Include(t => t.Event).Include(t => t.Member).Include(t => t.Section).Include(t => t.Show).Include(t => t.Ticket);
@@ -52,6 +52,7 @@ namespace LayoutTry.Controllers
             
             foreach(TicketRequest tr in datas)
             {
+                TRListViewModel vm = new TRListViewModel();
                 vm.TicketRequestId = tr.TicketRequestId;
                 vm.eventName = tr.Event.EventName;
                 vm.TRStatus = tr.RequestStatus;
@@ -60,7 +61,7 @@ namespace LayoutTry.Controllers
             }
             return View(list);
 
-            //return View(await ispanFinContext.ToListAsync());
+            
         }
 
         // GET: TicketRequests/Details/5
