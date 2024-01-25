@@ -47,5 +47,8 @@ namespace LayoutTry.ViewModel
 
 
         public int TicketRequestId { get; set; }
+
+        [DisplayName("會員ID")]
+        public int? MemberID { get; set; }
     }
 }

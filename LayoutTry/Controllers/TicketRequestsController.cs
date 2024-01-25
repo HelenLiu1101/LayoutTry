@@ -20,72 +20,106 @@ namespace LayoutTry.Controllers
             _context = context;
         }
 
-        //// GET: TicketRequests 
-
-        //public async Task<IActionResult> GetTicketRequests()
-        //{
-        //    //return _context.TicketRequests.Select(e => new TicketRequestsDTO {
-        //    //    EmployeeId = e.EmployeeId,
-        //    //    FirstName = e.FirstName,
-        //    //    LastName = e.LastName,
-        //    //    Title = e.Title
-        //    //});
-        //    return View();
-        //}
-
-
 
         // GET: TicketRequests
+        //    public async Task<IActionResult> List(CKeywordViewModel keyWvm)
+        //    {
+        //        List<TRListViewModel> list = new List<TRListViewModel>();
+
+        //        var datas = await _context.TicketRequests
+        //            .Include(t => t.Event)
+        //            .Include(t => t.Member)
+        //            .Include(t => t.Section)
+        //            .Include(t => t.Show)
+        //            .Include(t => t.Ticket).ToListAsync();
+
+        //        if (string.IsNullOrEmpty(keyWvm.txtKeyword))
+        //        {
+        //            foreach (TicketRequest tr in datas)
+        //            {
+        //                TRListViewModel vm = new TRListViewModel();
+        //                vm.TicketRequestId = tr.TicketRequestId;
+        //                vm.eventName = tr.Event.EventName;
+        //                vm.TRStatus = tr.RequestStatus;
+        //                vm.ReleaseDate = tr.ReleaseDate;
+        //                list.Add(vm);
+
+        //            }
+        //        }
+        //        else
+        //        {
+
+
+        //            datas = await _context.TicketRequests
+        //.Where(p => p.Event.EventName.Contains(keyWvm.txtKeyword))
+        //.ToListAsync();
+
+
+        //            foreach (TicketRequest tr in datas)
+        //            {
+        //                TRListViewModel vm = new TRListViewModel();
+
+        //                vm.TicketRequestId = tr.TicketRequestId;
+        //                vm.eventName = tr.Event.EventName;
+        //                vm.TRStatus = tr.RequestStatus;
+        //                vm.ReleaseDate = tr.ReleaseDate;
+        //                list.Add(vm);
+        //            }
+        //        }
+
+
+        //        return View(list);
+        //    }
         public async Task<IActionResult> List(CKeywordViewModel keyWvm)
         {
             List<TRListViewModel> list = new List<TRListViewModel>();
-            //var ispanFinContext = _context.TicketRequests.Include(t => t.Event).Include(t => t.Member).Include(t => t.Section).Include(t => t.Show).Include(t => t.Ticket);
-            //_context.TicketRequests.Select(tr => new TicketRequestDTO
-            //var datas = from tr in _context.TicketRequests select tr;
+
             var datas = await _context.TicketRequests
                 .Include(t => t.Event)
                 .Include(t => t.Member)
                 .Include(t => t.Section)
                 .Include(t => t.Show)
                 .Include(t => t.Ticket).ToListAsync();
-
             if (string.IsNullOrEmpty(keyWvm.txtKeyword))
             {
                 foreach (TicketRequest tr in datas)
                 {
-                    TRListViewModel vm = new TRListViewModel();
-                    vm.TicketRequestId = tr.TicketRequestId;
-                    vm.eventName = tr.Event.EventName;
-                    vm.TRStatus = tr.RequestStatus;
-                    vm.ReleaseDate = tr.ReleaseDate;
+                    TRListViewModel vm = new TRListViewModel
+                    {
+                        TicketRequestId = (int)tr.TicketRequestId,
+                        eventName = tr.Event.EventName,
+                        TRStatus = tr.RequestStatus,
+                        MemberID = (int)tr.Member.MemberId,
+                        ReleaseDate = tr.ReleaseDate
+                    };
                     list.Add(vm);
-
                 }
             }
             else
             {
 
-
                 datas = await _context.TicketRequests
     .Where(p => p.Event.EventName.Contains(keyWvm.txtKeyword))
     .ToListAsync();
-
-
                 foreach (TicketRequest tr in datas)
                 {
-                    TRListViewModel vm = new TRListViewModel();
-
-                    vm.TicketRequestId = tr.TicketRequestId;
-                    vm.eventName = tr.Event.EventName;
-                    vm.TRStatus = tr.RequestStatus;
-                    vm.ReleaseDate = tr.ReleaseDate;
+                    TRListViewModel vm = new TRListViewModel
+                    {
+                        TicketRequestId = (int)tr.TicketRequestId,
+                        eventName = tr.Event.EventName,
+                        TRStatus = tr.RequestStatus,
+                        MemberID = (int)tr.Member.MemberId,
+                        ReleaseDate = tr.ReleaseDate
+                    };
                     list.Add(vm);
                 }
             }
 
-
             return View(list);
+
+
         }
+
 
         private bool TicketRequestExists(int id)
         {
