@@ -8,8 +8,11 @@
 
 @using (Html.BeginForm())
 {
-    @Html.TextBox("txtKeyword", null, new { placeholder = "請輸入關鍵字" })
-    <input type="submit" value="查詢" class="ms-2 btn btn-outline-secondary" />
+    @Html.TextBox("txtKeyword", null, new { placeholder = "請輸入關鍵字", name = "txtKeyword"})
+    <button type="submit" class="ms-2 btn btn-outline-secondary">
+        <i class="bi bi-search"></i> 查詢
+    </button>
+   @*  <input type="submit" value="查詢" /> *@
 }
 
 <p>

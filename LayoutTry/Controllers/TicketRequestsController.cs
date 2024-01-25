@@ -35,9 +35,8 @@ namespace LayoutTry.Controllers
 
 
 
-        [HttpGet]
         // GET: TicketRequests
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(CKeywordViewModel keyWvm)
         {
             List<TRListViewModel> list = new List<TRListViewModel>();
             //var ispanFinContext = _context.TicketRequests.Include(t => t.Event).Include(t => t.Member).Include(t => t.Section).Include(t => t.Show).Include(t => t.Ticket);
@@ -49,19 +48,104 @@ namespace LayoutTry.Controllers
                 .Include(t => t.Section)
                 .Include(t => t.Show)
                 .Include(t => t.Ticket).ToListAsync();
-            
-            foreach(TicketRequest tr in datas)
+
+            if (string.IsNullOrEmpty(keyWvm.txtKeyword))
             {
-                TRListViewModel vm = new TRListViewModel();
-                vm.TicketRequestId = tr.TicketRequestId;
-                vm.eventName = tr.Event.EventName;
-                vm.TRStatus = tr.RequestStatus;
-                vm.ReleaseDate = tr.ReleaseDate;
-                list.Add(vm);
+                foreach (TicketRequest tr in datas)
+                {
+                    TRListViewModel vm = new TRListViewModel();
+                    vm.TicketRequestId = tr.TicketRequestId;
+                    vm.eventName = tr.Event.EventName;
+                    vm.TRStatus = tr.RequestStatus;
+                    vm.ReleaseDate = tr.ReleaseDate;
+                    list.Add(vm);
+
+                }
             }
+            else
+            {
+
+
+                datas = await _context.TicketRequests
+    .Where(p => p.Event.EventName.Contains(keyWvm.txtKeyword))
+    .ToListAsync();
+
+
+                foreach (TicketRequest tr in datas)
+                {
+                    TRListViewModel vm = new TRListViewModel();
+
+                    vm.TicketRequestId = tr.TicketRequestId;
+                    vm.eventName = tr.Event.EventName;
+                    vm.TRStatus = tr.RequestStatus;
+                    vm.ReleaseDate = tr.ReleaseDate;
+                    list.Add(vm);
+                }
+            }
+
+
+            return View(list);
+        }
+
+        private bool TicketRequestExists(int id)
+        {
+            return _context.TicketRequests.Any(e => e.TicketRequestId == id);
+        }
+
+        [HttpPost]
+        // GET: TicketRequests
+        public async Task<IActionResult> kwList(CKeywordViewModel keyWvm)
+        {
+            List<TRListViewModel> list = new List<TRListViewModel>();
+
+            var datas = await _context.TicketRequests
+                .Include(t => t.Event)
+                .Include(t => t.Member)
+                .Include(t => t.Section)
+                .Include(t => t.Show)
+                .Include(t => t.Ticket).ToListAsync();
+            if (string.IsNullOrEmpty(keyWvm.txtKeyword))
+            {
+                foreach (TicketRequest tr in datas)
+                {
+                    TRListViewModel vm = new TRListViewModel();
+                    vm.TicketRequestId = tr.TicketRequestId;
+                    vm.eventName = tr.Event.EventName;
+                    vm.TRStatus = tr.RequestStatus;
+                    vm.ReleaseDate = tr.ReleaseDate;
+                    list.Add(vm);
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("|| tr.Event.EventName.Contains(keyWvm.txtKeyword)");
+
+            }
+            //foreach (TicketRequest tr in datas)
+            //{
+            //    TRListViewModel vm = new TRListViewModel();
+
+            //    // 如果有輸入關鍵字，檢查 EventName 是否包含該關鍵字
+            //    if (string.IsNullOrEmpty(keyWvm.txtKeyword))
+            //    {
+            //        vm.TicketRequestId = tr.TicketRequestId;
+            //        vm.eventName = tr.Event.EventName;
+            //        vm.TRStatus = tr.RequestStatus;
+            //        vm.ReleaseDate = tr.ReleaseDate;
+            //        list.Add(vm);
+            //    }
+            //    else
+            //    {
+            //        // tr.Event.EventName.Contains(keyWvm.txtKeyword)
+            //        Console.WriteLine("|| tr.Event.EventName.Contains(keyWvm.txtKeyword)");
+            //    }
+            //}
+
+
             return View(list);
 
-            
+
         }
 
         // GET: TicketRequests/Details/5
@@ -78,7 +162,7 @@ namespace LayoutTry.Controllers
                 .Include(t => t.Section)
                 .Include(t => t.Show)
                 .Include(t => t.Ticket).ToListAsync();
-           string str= ticketRequest[0].Event.EventName; 
+            string str = ticketRequest[0].Event.EventName;
 
             if (ticketRequest == null)
             {
@@ -201,7 +285,7 @@ namespace LayoutTry.Controllers
             if (ticketRequest != null)
             {
                 _context.TicketRequests.Remove(ticketRequest);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToAction("List");
@@ -222,10 +306,7 @@ namespace LayoutTry.Controllers
             return RedirectToAction("List");
         }
 
-        private bool TicketRequestExists(int id)
-        {
-            return _context.TicketRequests.Any(e => e.TicketRequestId == id);
-        }
+
     }
 }
 
