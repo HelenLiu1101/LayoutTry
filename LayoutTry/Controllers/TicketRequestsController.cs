@@ -198,12 +198,13 @@ namespace LayoutTry.Controllers
                 .Include(t => t.Show)
                 .Include(t => t.Ticket)
                 .FirstOrDefaultAsync(m => m.TicketRequestId == id);
-            if (ticketRequest == null)
+            if (ticketRequest != null)
             {
-                return NotFound();
+                _context.TicketRequests.Remove(ticketRequest);
+                await _context.SaveChangesAsync(); 
             }
 
-            return View(ticketRequest);
+            return RedirectToAction("List");
         }
 
         // POST: TicketRequests/Delete/5
@@ -218,7 +219,7 @@ namespace LayoutTry.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("List");
         }
 
         private bool TicketRequestExists(int id)

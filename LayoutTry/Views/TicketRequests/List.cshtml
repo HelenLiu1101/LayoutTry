@@ -49,13 +49,14 @@
                         @Html.DisplayFor(modelItem => item.ReleaseDate)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.TicketRequestId">編輯</a> |
-
-                        <a asp-action="Delete" asp-route-id="@item.TicketRequestId" style="color: #dd1450; font-weight: bold;">刪除</a>
-                       
+                         
+                        <a asp-action="Delete" asp-route-id="@item.TicketRequestId" onclick="return confirm('確定要刪除嗎？')" class="btn btn-outline-danger">刪除</a>
+                                             
                     </td>
                 </tr>
             }
 }
     </tbody>
 </table>
+@* <a asp-action="Edit" asp-route-id="@item.TicketRequestId">編輯</a> |
+<a asp-action="Delete" asp-route-id="@item.TicketRequestId" style="color: #dd1450; font -weight: bold;">刪除</a>*@
