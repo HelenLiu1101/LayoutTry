@@ -57,32 +57,43 @@
             foreach (var item in Model)
             {
                 count++;
-                <tr>
-                    <td>@count</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.eventName)
-                    </td>
-                    
-                    <td>
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.eventName)
+                                            </td>
+                                            
+                                            <td>
 
-                        @Html.DisplayFor(modelItem => item.MemberID)
-                    </td>
-                    <td>
-                        <p class="font-monospace text-body-secondary">
-                            @Html.DisplayFor(modelItem => item.ReleaseDate)
-                        </p>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.strStatus)
-                    </td>
-                    <td>
-                        <a asp-action="Delete" asp-controller="TicketRequests" asp-route-id="@item.TicketRequestId" onclick="return confirm('確定要刪除嗎？')" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
-                    </td>
-                </tr>
+                                                @Html.DisplayFor(modelItem => item.MemberID)
+                                            </td>
+                                            <td>
+                                                <p class="font-monospace text-body-secondary">
+                                                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                                                </p>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.strStatus)
+                                            </td>
+                                            <td>
+                                                <a asp-action="Delete" asp-controller="TicketRequests" asp-route-id="@item.TicketRequestId" onclick="return confirm('確定要刪除嗎？')" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                                            </td>
+                                        </tr>
             }
         }
     </tbody>
+
 </table>
+<div class="container">
+    <ul id="menu-filters" class="menu-filter-list">
+        <li data-search="online-food" class="active btn btn-secondary"> Show all</li>
+    </ul>
+
+</div>
+
+
+
+
 <script>
     function handleItemClick(strStatus) {
         // 在這裡處理點擊事件，你可以使用 strStatus 來進行相應的操作
@@ -90,6 +101,20 @@
         // 或者調用其他 JavaScript 函數，發送 Ajax 請求等等
         
     }
+
+    var posts = $('.post');
+    (function ($) {
+        $("#menu-filters li").click(function () {
+            $("#menu-filters li").removeClass('active btn btn-secondary');
+            $(this).addClass('active btn btn-secondary');
+
+            var selectedFilter = $(this).data("search");
+            $(".online-food").fadeOut();
+            setTimeout(function () {
+                $("." + selectedFilter.fadeIn();
+            },300);
+        });
+    });
 </script>
 @* <a asp-action="Edit" asp-route-id="@item.TicketRequestId">編輯</a> |
 <a asp-action="Delete" asp-route-id="@item.TicketRequestId" style="color: #dd1450; font -weight: bold;">刪除</a>*@
