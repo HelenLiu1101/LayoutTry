@@ -39,10 +39,10 @@
                         @Html.DisplayNameFor(model => model.TRStatus)
 
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" id="menu-filters">
                         @foreach (var item in Model)
                         {
-                            <li><a class="dropdown-item" href="#" onclick="handleItemClick('@item.strStatus')">@Html.DisplayFor(modelItem => item.strStatus)</a></li>
+                            <li><a class="dropdown-item" data-search="@item.strStatus">@Html.DisplayFor(modelItem => item.strStatus)</a></li>
                             
                         }
                     </ul>
@@ -51,13 +51,14 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="post online-food">
         @{
             int count = 0;
             foreach (var item in Model)
             {
                 count++;
-                                        <tr>
+
+                <tr >
                                             <td>@count</td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.eventName)
@@ -81,40 +82,36 @@
                                         </tr>
             }
         }
+        
     </tbody>
+    
 
 </table>
-<div class="container">
-    <ul id="menu-filters" class="menu-filter-list">
-        <li data-search="online-food" class="active btn btn-secondary"> Show all</li>
-    </ul>
 
-</div>
 
 
 
 
 <script>
-    function handleItemClick(strStatus) {
-        // 在這裡處理點擊事件，你可以使用 strStatus 來進行相應的操作
-        alert('Clicked on: ' + strStatus);
-        // 或者調用其他 JavaScript 函數，發送 Ajax 請求等等
+    // function handleItemClick(strStatus) {
+    //     // 在這裡處理點擊事件，你可以使用 strStatus 來進行相應的操作
+    //     alert('Clicked on: ' + strStatus);
+    //     // 或者調用其他 JavaScript 函數，發送 Ajax 請求等等
         
-    }
+    // }
 
     var posts = $('.post');
     (function ($) {
-        $("#menu-filters li").click(function () {
-            $("#menu-filters li").removeClass('active btn btn-secondary');
-            $(this).addClass('active btn btn-secondary');
+        $("#menu-filters a").click(function () {
+            
 
             var selectedFilter = $(this).data("search");
             $(".online-food").fadeOut();
             setTimeout(function () {
-                $("." + selectedFilter.fadeIn();
-            },300);
+                $("." + selectedFilter).fadeIn();
+            }, 300);
         });
-    });
+    })(jQuery);
 </script>
 @* <a asp-action="Edit" asp-route-id="@item.TicketRequestId">編輯</a> |
 <a asp-action="Delete" asp-route-id="@item.TicketRequestId" style="color: #dd1450; font -weight: bold;">刪除</a>*@
